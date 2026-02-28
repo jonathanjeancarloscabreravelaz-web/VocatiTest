@@ -21,7 +21,7 @@
         const respuestas = JSON.parse(localStorage.getItem('respuestas') || '[]');
         const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
 
-        // Definir perfiles ficticios por rango de preguntas
+        
         const perfiles = [
             { nombre: "Ingeniería en Gestión Empresarial", indices: [0,1,2,3,4] },
             { nombre: "Ingeniería Electromecánica", indices: [5,6,7,8,9] },
@@ -35,15 +35,15 @@
             { nombre: "Ingeniería en Desarrollo de Aplicaciones", indices: [45,46,47,48,49] },
         ];
 
-        // Calcular puntaje por perfil
+ 
         perfiles.forEach(p => {
             p.puntaje = p.indices.reduce((acc, i) => acc + (respuestas[i] ? 1 : 0), 0);
         });
 
-        // Ordenar por puntaje
+       
         perfiles.sort((a,b)=> b.puntaje - a.puntaje);
 
-        // Mostrar resultado principal
+     
         const principal = perfiles[0];
         document.getElementById('resultadoPrincipal').innerHTML = `
             <span class="medalla">🥇</span>
@@ -51,7 +51,7 @@
             <p>Hola ${usuario.nombre || 'Usuario'}, tu afinidad con este área es alta según tus respuestas.</p>
         `;
 
-        // Mostrar ranking secundario
+        
         const ranking = perfiles.slice(1,3);
         const rankingDiv = document.getElementById('rankingSecundario');
         ranking.forEach((p, i)=>{
@@ -63,3 +63,4 @@
     </script>
 </body>
 </html>
+
