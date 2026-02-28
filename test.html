@@ -12,16 +12,13 @@
         <hr>
 
         <form id="vocatiForm">
-            <div class="bloque-test" id="preguntasContainer">
-                <!-- Las preguntas se generarán aquí con JavaScript -->
-            </div>
-
+            <div id="preguntasContainer"></div>
             <button type="submit" class="btn">FINALIZAR Y VER RESULTADOS</button>
         </form>
     </div>
 
     <script>
-        // Array con las 50 preguntas
+        // Tus 50 preguntas
         const preguntas = [
             '¿Te gustaría aprender a organizar empresas y hacer que funcionen mejor?',
             '¿Disfrutas resolver problemas y tomar decisiones importantes?',
@@ -75,25 +72,35 @@
             '¿Te interesa crear soluciones tecnológicas innovadoras con un enfoque ético y responsable?'
         ];
 
-        // Contenedor donde se generarán las preguntas
         const contenedor = document.getElementById('preguntasContainer');
 
         // Generar preguntas dinámicamente
         preguntas.forEach((texto, index) => {
             const numero = index + 1;
-
-            const preguntaCard = document.createElement('div');
-            preguntaCard.className = 'pregunta-card';
-
-            preguntaCard.innerHTML = `
+            const div = document.createElement('div');
+            div.className = 'pregunta-card';
+            div.innerHTML = `
                 <p>${numero}. ${texto}</p>
                 <div class="opciones">
                     <label><input type="radio" name="p${numero}" value="true" required> Sí</label>
                     <label><input type="radio" name="p${numero}" value="false"> No</label>
                 </div>
             `;
+            contenedor.appendChild(div);
+        });
 
-            contenedor.appendChild(preguntaCard);
+        // Guardar respuestas
+        const form = document.getElementById('vocatiForm');
+        form.addEventListener('submit', function(e){
+            e.preventDefault();
+            const respuestas = [];
+            preguntas.forEach((_, i)=>{
+                const name = 'p' + (i+1);
+                const checked = document.querySelector(`input[name="${name}"]:checked`);
+                respuestas.push(checked.value === 'true');
+            });
+            localStorage.setItem('respuestas', JSON.stringify(respuestas));
+            window.location.href = 'resultados.html';
         });
     </script>
 </body>
