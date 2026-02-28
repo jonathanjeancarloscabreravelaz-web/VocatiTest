@@ -10,7 +10,7 @@
         <h1>Registro de Usuario</h1>
         <p>Por favor, ingresa tus datos para comenzar la prueba.</p>
         
-        <form action="test.html">
+        <form id="registroForm">
             <label for="nombre">Nombre Completo:</label>
             <input type="text" id="nombre" placeholder="Ej. Juan Pérez" required>
             
@@ -20,5 +20,24 @@
             <button type="submit" class="btn">INICIAR TEST</button>
         </form>
     </div>
+
+    <script>
+        const form = document.getElementById('registroForm');
+        form.addEventListener('submit', function(e){
+            e.preventDefault();
+
+            const nombre = document.getElementById('nombre').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if(nombre && email){
+                const usuario = { nombre, email };
+                localStorage.setItem('usuario', JSON.stringify(usuario));
+                localStorage.setItem('respuestas', JSON.stringify([])); // inicializa respuestas
+                window.location.href = 'test.html';
+            } else {
+                alert("Por favor completa todos los campos.");
+            }
+        });
+    </script>
 </body>
 </html>
